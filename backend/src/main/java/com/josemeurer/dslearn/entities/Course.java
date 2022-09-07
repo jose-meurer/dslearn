@@ -3,7 +3,9 @@ package com.josemeurer.dslearn.entities;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_course")
@@ -17,6 +19,9 @@ public class Course implements Serializable {
     private String name;
     private String imgUri;
     private String imgGrayUri;
+
+    @OneToMany(mappedBy = "course")
+    private Set<Offer> offers = new HashSet<>(); //Se der erro, mudar para list
 
     public Course() {
     }
@@ -58,6 +63,10 @@ public class Course implements Serializable {
 
     public void setImgGrayUri(String imgGrayUri) {
         this.imgGrayUri = imgGrayUri;
+    }
+
+    public Set<Offer> getOffers() {
+        return offers;
     }
 
     @Override
