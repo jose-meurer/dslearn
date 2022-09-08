@@ -38,3 +38,10 @@ INSERT INTO tb_section (title, description, position, img_Uri, resource_id, prer
 INSERT INTO tb_section (title, description, position, img_Uri, resource_id, prerequisite_id) VALUES ('Capitulo 2', 'Capitulo de introducao', 2, 'https://arquivo.devmedia.com.br/cursos/imagem/curso_o-que-e-java_2028.png', 1, 1);
 INSERT INTO tb_section (title, description, position, img_Uri, resource_id, prerequisite_id) VALUES ('Capitulo 3', 'Neste capitulo iremos codar', 3, 'https://arquivo.devmedia.com.br/cursos/imagem/curso_o-que-e-java_2028.png', 1, 2);
 
+--Enrollments
+INSERT INTO tb_enrollment (user_id, offer_id, enroll_Moment, refund_Moment, available, only_Update) VALUES (1, 1, TIMESTAMP WITH TIME ZONE '2020-12-12T13:00:00Z', null, true, false);
+INSERT INTO tb_enrollment (user_id, offer_id, enroll_Moment, refund_Moment, available, only_Update) VALUES (2, 1, TIMESTAMP WITH TIME ZONE '2020-12-12T13:00:00Z', null, true, false);
+
+
+
+
