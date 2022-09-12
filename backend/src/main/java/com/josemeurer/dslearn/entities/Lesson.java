@@ -36,6 +36,9 @@ public abstract class Lesson implements Serializable {
             })
     private Set<Enrollment> enrollmentsDone = new HashSet<>();
 
+    @OneToMany(mappedBy = "lesson")
+    private Set<Deliver> deliveries = new HashSet<>();
+
     public Lesson() {
     }
 

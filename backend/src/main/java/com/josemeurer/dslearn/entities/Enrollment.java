@@ -1,7 +1,5 @@
 package com.josemeurer.dslearn.entities;
 
-import com.josemeurer.dslearn.entities.Offer;
-import com.josemeurer.dslearn.entities.User;
 import com.josemeurer.dslearn.entities.pk.EnrollmentPK;
 
 import javax.persistence.*;
@@ -9,6 +7,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -30,6 +29,9 @@ public class Enrollment implements Serializable {
 
     @ManyToMany(mappedBy = "enrollmentsDone")
     private Set<Lesson> lessonsDone = new HashSet<>();
+
+    @OneToMany(mappedBy = "enrollment")
+    private Set<Deliver> deliveries = new HashSet<>();
 
     public Enrollment() {
     }
@@ -93,5 +95,22 @@ public class Enrollment implements Serializable {
 
     public Set<Lesson> getLessonsDone() {
         return lessonsDone;
+    }
+
+    public Set<Deliver> getDeliveries() {
+        return deliveries;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Enrollment that = (Enrollment) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
