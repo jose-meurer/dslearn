@@ -3,7 +3,9 @@ package com.josemeurer.dslearn.entities;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_section")
@@ -26,6 +28,9 @@ public class Section implements Serializable {
     @ManyToOne
     @JoinColumn(name = "prerequisite_id")
     private Section prerequisite;
+
+    @OneToMany(mappedBy = "section")
+    private Set<Lesson> lessons = new HashSet<>();
 
     public Section() {
     }
@@ -94,6 +99,10 @@ public class Section implements Serializable {
 
     public void setPrerequisite(Section prerequisite) {
         this.prerequisite = prerequisite;
+    }
+
+    public Set<Lesson> getLessons() {
+        return lessons;
     }
 
     @Override
