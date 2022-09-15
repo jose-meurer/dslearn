@@ -1,15 +1,20 @@
 package com.josemeurer.dslearn.entities;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -90,5 +95,37 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    //UserDetails
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream().map(x -> new SimpleGrantedAuthority(x.getAuthority())).toList();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return !roles.isEmpty();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !roles.isEmpty();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !roles.isEmpty();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return !roles.isEmpty();
     }
 }
