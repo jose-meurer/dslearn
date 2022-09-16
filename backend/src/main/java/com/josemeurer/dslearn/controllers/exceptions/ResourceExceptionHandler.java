@@ -1,7 +1,9 @@
 package com.josemeurer.dslearn.controllers.exceptions;
 
 import com.josemeurer.dslearn.services.exceptions.DatabaseException;
+import com.josemeurer.dslearn.services.exceptions.ForbiddenException;
 import com.josemeurer.dslearn.services.exceptions.ResourceNotFoundException;
+import com.josemeurer.dslearn.services.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -54,5 +56,17 @@ public class ResourceExceptionHandler {
 
 
         return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(ForbiddenException.class) //403
+    public ResponseEntity<OAuthCustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+        OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class) //401
+    public ResponseEntity<OAuthCustomError> Unauthorized(UnauthorizedException e, HttpServletRequest request) {
+        OAuthCustomError err = new OAuthCustomError("Unauthorized", e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
     }
 }

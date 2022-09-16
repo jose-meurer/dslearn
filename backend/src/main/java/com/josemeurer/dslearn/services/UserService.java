@@ -17,18 +17,19 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public UserDTO findById(Long id) {
+        authService.validateSelfOrAdmin(id); //Validacao de busca do id
+
         Optional<User> userOptional = userRepository.findById(id);
         User entity = userOptional.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return new UserDTO(entity);
     }
-
-
-
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
