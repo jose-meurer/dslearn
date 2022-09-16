@@ -59,8 +59,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 .withClient(clientId).secret(passwordEncoder.encode(clientSecret))
                 .scopes("read", "write")
-                .authorizedGrantTypes("password")
-                .accessTokenValiditySeconds(jwtDuration);
+                .authorizedGrantTypes("password", "refresh_token")
+                .accessTokenValiditySeconds(jwtDuration)
+                .refreshTokenValiditySeconds(jwtDuration);
     }
 
     @Override
@@ -70,9 +71,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         chain.setTokenEnhancers(Arrays.asList(tokenConverter, tokenEnhancer));
 
         endpoints.authenticationManager(authenticationManager)
-                .accessTokenConverter(tokenConverter)
-                .tokenStore(tokenStore)
                 .tokenEnhancer(chain)
+                .tokenStore(tokenStore)
                 .userDetailsService(userDetailsService);
     }
 }
