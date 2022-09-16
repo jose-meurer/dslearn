@@ -11,7 +11,7 @@ public class OAuthCustomError implements Serializable {
 
     private String error;
 
-    @JsonProperty("error_description") //Quando for serializado mudará para camel_case
+    @JsonProperty("error_description") //Quando for serializado mudará para snake_case
     private String errorDescription;
 
     public OAuthCustomError() {
