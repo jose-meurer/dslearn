@@ -4,9 +4,9 @@ import com.josemeurer.dslearn.entities.Role;
 import com.josemeurer.dslearn.entities.User;
 import com.josemeurer.dslearn.repositories.UserRepository;
 import com.josemeurer.dslearn.services.exceptions.ForbiddenException;
+import com.josemeurer.dslearn.services.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.exceptions.UnauthorizedUserException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,7 @@ public class AuthService {
             return userRepository.findByEmail(username);
         }
         catch (Exception e) {
-            throw new UnauthorizedUserException("Invalid user");
+            throw new UnauthorizedException("Invalid user");
         }
     }
 
